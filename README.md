@@ -13,8 +13,8 @@
 
 ### Association
 
-* has_many :prototypes
-* has_many :comments
+- has_many :prototypes
+- has_many :comments
 
 ## prototypes table
 
