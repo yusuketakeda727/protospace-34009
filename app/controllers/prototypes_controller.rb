@@ -21,10 +21,36 @@ class PrototypesController < ApplicationController
   end
 
   def show
+    # showアクションにインスタンス変数@prototypeを定義した。且つ、Pathパラメータで送信されるID値で、Prototypeモデルの特定のオブジェクトを取得するように記述し、それを@prototypeに代入した
+    @prototype = Prototype.find_by(params[:id])
     
   end
 
-  private
+  def edit
+    # editアクションにインスタンス変数@prototypeを定義した。且つ、Pathパラメータで送信されるID値で、Prototypeモデルの特定のオブジェクトを取得するように記述し、それを@prototypeに代入した
+    @prototype = Prototype.find(params[:id])
+  end
+
+  def update
+    # updateアクションにデータを更新する記述をし、更新されたときはそのプロトタイプの詳細ページに戻るような記述をした
+    # updateアクションに、データが更新されなかったときは、編集ページに戻るようにrenderを用いて記述した
+    prototype = Prototype.find_by(params[:id])
+    # binding.pry
+    if prototype.update(prototype_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    prototype = Prototype.find_by(params[:id])
+    if prototype.destroy
+      redirect_to root_path
+    end
+  end
+
+private
 
   def prototype_params
     params.require(:prototype).permit(:title, :catch_copy, :concept, :image).merge(user_id: current_user.id)
