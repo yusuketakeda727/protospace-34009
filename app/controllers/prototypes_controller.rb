@@ -22,8 +22,10 @@ class PrototypesController < ApplicationController
 
   def show
     # showアクションにインスタンス変数@prototypeを定義した。且つ、Pathパラメータで送信されるID値で、Prototypeモデルの特定のオブジェクトを取得するように記述し、それを@prototypeに代入した
-    @prototype = Prototype.find_by(params[:id])
-    
+    @prototype = Prototype.find(params[:id])
+    @comment = Comment.new
+    @comments = @prototype.comments.includes(:user)
+    # binding.pry
   end
 
   def edit
@@ -34,7 +36,7 @@ class PrototypesController < ApplicationController
   def update
     # updateアクションにデータを更新する記述をし、更新されたときはそのプロトタイプの詳細ページに戻るような記述をした
     # updateアクションに、データが更新されなかったときは、編集ページに戻るようにrenderを用いて記述した
-    prototype = Prototype.find_by(params[:id])
+    prototype = Prototype.find(params[:id])
     # binding.pry
     if prototype.update(prototype_params)
       redirect_to root_path
