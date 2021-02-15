@@ -35,6 +35,9 @@ class PrototypesController < ApplicationController
   def edit
     # editアクションにインスタンス変数@prototypeを定義した。且つ、Pathパラメータで送信されるID値で、Prototypeモデルの特定のオブジェクトを取得するように記述し、それを@prototypeに代入した
     @prototype = Prototype.find(params[:id])
+    unless @prototype.user_id == current_user.id
+      render :index
+    end
   end
 
   def update
